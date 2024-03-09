@@ -7,8 +7,9 @@
 </template>
 
 <script setup>
-import { showErrorBoardModal } from '../js/state';
+import { modals } from '../js/state';
 import MyTransition from './MyTransition.vue';
+const { showErrorBoardModal } = modals;
 </script>
 
 <style scoped>

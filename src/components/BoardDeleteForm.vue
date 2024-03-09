@@ -16,10 +16,11 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import { boards, showDeleteBoardModal, toggleDeleteBoardModal } from '../js/state';
+import { boards, modals, toggleDeleteBoardModal } from '../js/state';
 import MyTransition from './MyTransition.vue';
 
 const router = useRouter();
+const { showDeleteBoardModal } = modals;
 
 const deleteBoard = () => {
 	const newBoards = boards.filter(b => b !== props.board);

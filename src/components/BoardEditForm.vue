@@ -66,7 +66,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import {
-	showEditBoardModal,
+	modals,
 	toggleDeleteBoardModal,
 	toggleEditBoardModal,
 	hideEditBoardModal,
@@ -76,6 +76,7 @@ import MyTransition from './MyTransition.vue';
 const form = ref(null);
 const boardCopy = ref();
 const props = defineProps({ board: Object });
+const { showEditBoardModal } = modals;
 watch(
 	showEditBoardModal,
 	() => (boardCopy.value = props.board && JSON.parse(JSON.stringify(props.board)))

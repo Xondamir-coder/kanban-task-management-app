@@ -60,13 +60,14 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { boards, toggleAddBoardModal, showAddBoardModal } from '../js/state';
+import { boards, toggleAddBoardModal, modals } from '../js/state';
 import { getEmptyCol, getEmptyBoard } from '../js/helpers';
 import MyTransition from './MyTransition.vue';
 
 const router = useRouter();
 const form = ref(null);
 const newBoard = ref(getEmptyBoard());
+const { showAddBoardModal } = modals;
 
 const toggleModal = () => {
 	newBoard.value = getEmptyBoard();

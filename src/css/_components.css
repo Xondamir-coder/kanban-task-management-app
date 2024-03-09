@@ -181,6 +181,7 @@ body.dark .text-field::placeholder {
 	gap: 2rem;
 	padding: 3.2rem;
 	background-color: var(--white);
+	border-radius: 5px;
 }
 .modal__board-name {
 	display: flex;

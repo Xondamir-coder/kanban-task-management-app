@@ -27,16 +27,12 @@
 </template>
 
 <script setup>
-import {
-	showMenuModal,
-	toggleMenuModal,
-	toggleEditBoardModal,
-	toggleErrorBoardModal,
-} from '../js/state';
+import { modals, toggleMenuModal, toggleEditBoardModal, toggleErrorBoardModal } from '../js/state';
 import MyTransition from './MyTransition.vue';
 import NavMenu from './NavMenu.vue';
 
 const props = defineProps({ board: Object });
+const { showMenuModal } = modals;
 
 const toggleEditModal = () => (props.board ? toggleEditBoardModal() : toggleErrorBoardModal());
 </script>
