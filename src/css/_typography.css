@@ -39,3 +39,7 @@
 .body-b {
 	color: var(--dark-grey);
 }
+body.dark .body-m,
+body.dark .body-b {
+	color: var(--white);
+}

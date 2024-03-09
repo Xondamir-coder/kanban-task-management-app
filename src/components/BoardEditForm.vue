@@ -1,13 +1,9 @@
 <template>
 	<MyTransition>
-		<form
-			class="form centered"
-			v-if="showEditBoardModal"
-			@submit.prevent="submitForm"
-			ref="form">
+		<form class="modal" v-if="showEditBoardModal" @submit.prevent="submitForm" ref="form">
 			<h1 class="heading-l">Edit board</h1>
-			<div class="form__name">
-				<label class="form__label body-m" for="board__name">board name</label>
+			<div class="modal__board-name">
+				<label class="modal__board-label body-m" for="board__name">board name</label>
 				<div class="text-field-container width-100">
 					<input
 						class="text-field flex-grow-1"
@@ -20,10 +16,13 @@
 					<label for="board__name" class="text-field-label body-l">Can't be empty</label>
 				</div>
 			</div>
-			<div class="form__cols">
-				<label class="form__label body-m">board columns</label>
-				<TransitionGroup name="list" tag="ul" class="form__list">
-					<li class="form__item" v-for="(col, i) in boardCopy?.columns" :key="col">
+			<div class="modal__board-cols">
+				<label class="modal__board-label body-m">board columns</label>
+				<TransitionGroup name="list" tag="ul" class="modal__board-list">
+					<li
+						class="modal__board-list_item"
+						v-for="(col, i) in boardCopy?.columns"
+						:key="col">
 						<div class="text-field-container width-100">
 							<input
 								class="text-field body-l flex-grow-1"
@@ -43,7 +42,7 @@
 					</li>
 				</TransitionGroup>
 			</div>
-			<button class="form__add button-secondary" type="button" @click="addColumn">
+			<button class="model__board-add_btn button-secondary" type="button" @click="addColumn">
 				<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
 					<path
 						fill="#635FC7"
@@ -51,10 +50,15 @@
 				</svg>
 				add new column
 			</button>
-			<button class="form__save button-destructive" type="button" @click="toggleDeleteModal">
+			<button
+				class="model__board-delete_btn button-destructive"
+				type="button"
+				@click="toggleDeleteModal">
 				delete board
 			</button>
-			<button class="form__save button-primary-s" type="submit">save changes</button>
+			<button class="model__board-save_btn button-primary-s" type="submit">
+				save changes
+			</button>
 		</form>
 	</MyTransition>
 </template>
@@ -93,8 +97,8 @@ const addColumn = () => {
 	boardCopy.value.columns.push(emptyCol);
 
 	// focus the input
-	const list = document.querySelector('.form__list');
-	setTimeout(() => list.lastChild.firstChild.focus(), 50);
+	const list = document.querySelector('.modal__board-list');
+	setTimeout(() => list.lastChild.firstChild.firstChild.focus(), 50);
 };
 const populateColumns = () => {
 	const formData = new FormData(form.value);

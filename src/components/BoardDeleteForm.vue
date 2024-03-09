@@ -1,12 +1,12 @@
 <template>
 	<MyTransition>
-		<div class="form header__delete centered" v-if="showDeleteBoardModal">
-			<h2 class="header__delete-heading heading-l">Delete this board?</h2>
+		<div class="modal modal__board-delete" v-if="showDeleteBoardModal">
+			<h2 class="modal__board-heading heading-l">Delete this board?</h2>
 			<p class="body-l">
 				Are you sure you want to delete the ‘{{ board.name }}’ board? This action will
 				remove all columns and tasks and cannot be reversed.
 			</p>
-			<div class="header__delete-btns">
+			<div class="modal__board-btns">
 				<button class="button-destructive" @click="deleteBoard">Delete</button>
 				<button class="button-secondary" @click="toggleDeleteBoardModal">Cancel</button>
 			</div>
@@ -24,7 +24,7 @@ const router = useRouter();
 const deleteBoard = () => {
 	const newBoards = boards.filter(b => b !== props.board);
 	boards.splice(0, boards.length, ...newBoards);
-	router.push(`/board/${boards.at(-1).id}`);
+	boards.length ? router.push(`/board/${boards.at(-1).id}`) : router.push('/');
 	toggleDeleteBoardModal();
 };
 
@@ -32,11 +32,11 @@ const props = defineProps({ board: Object });
 </script>
 
 <style scoped>
-.header__delete {
+.modal__board-delete {
 	width: 100%;
 	max-width: 45rem;
 }
-.header__delete-btns {
+.modal__board-btns {
 	display: flex;
 	justify-content: space-around;
 }
