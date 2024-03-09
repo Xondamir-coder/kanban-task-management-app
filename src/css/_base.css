@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+:root {
+	/* Colors */
+	--main-purple: rgb(99, 95, 199);
+	--main-purple-hover: rgb(168, 164, 255);
+	--black: rgb(0, 1, 18);
+	--very-dark-grey: rgb(32, 33, 44);
+	--dark-grey: rgb(43, 44, 55);
+	--lines-dark: rgb(62, 63, 78);
+	--medium-grey: rgb(130, 143, 163);
+	--lines-light: rgb(228, 235, 250);
+	--light-grey: rgb(244, 247, 253);
+	--white: rgb(255, 255, 255);
+	--white-hover: rgb(255, 255, 255, 0.75);
+	--red: rgb(234, 85, 85);
+	--red-hover: rgb(255, 152, 152);
+	--input-border: rgb(130, 143, 163, 0.25);
+
+	/* Typography */
+	--font-family: 'Plus Jakarta Sans', sans-serif;
+	--font-size-heading-xl: 2.4rem;
+	--font-size-heading-l: 1.8rem;
+	--font-size-heading-m: 1.5rem;
+	--font-size-heading-s: 1.2rem;
+	--font-weight-heading: bold;
+
+	/* Miscellaneous */
+	--sidebar-left-margin: 3.2rem;
+}
+html {
+	box-sizing: border-box;
+	/* 62.5 % of 16px -> 1rem - 10px */
+	font-size: 62.5%;
+}
+body {
+	font-family: var(--font-family);
+}
+#app {
+	display: grid;
+	transition: grid-template-columns 0.5s;
+}
+body.dark #app {
+	background-color: var(--very-dark-grey);
+}
+input[type='checkbox'] {
+	appearance: none;
+	position: relative;
+}
+ul[role='list'] {
+	list-style: none;
+}
+
+@media only screen and (min-width: 600px) {
+	#app {
+		grid-template-columns: min(30vw, 300px) 1fr;
+		grid-template-areas:
+			'sidebar header'
+			'sidebar main';
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	:root {
+		--sidebar-left-margin: 2rem;
+	}
+}
+@media only screen and (max-width: 700px) {
+	:root {
+		--sidebar-left-margin: 1rem;
+	}
+}
+@media only screen and (max-width: 600px) {
+	#app {
+		grid-template-areas:
+			'header'
+			'main';
+	}
+}

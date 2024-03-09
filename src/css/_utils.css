@@ -1,0 +1,23 @@
+.dark {
+	color: var(--white);
+}
+.app--closed {
+	grid-template-columns: 0px 1fr !important;
+}
+.hidden {
+	opacity: 0;
+	visibility: hidden;
+}
+.centered {
+	position: absolute;
+	z-index: 1;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.width-100 {
+	width: 100%;
+}
+.flex-grow-1 {
+	flex-grow: 1;
+}

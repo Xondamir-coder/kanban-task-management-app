@@ -1,0 +1,41 @@
+/* 1rem - 10px */
+/* Headings */
+.heading-xl {
+	font-size: var(--font-size-heading-xl);
+	line-height: 3rem;
+}
+.heading-l {
+	font-size: var(--font-size-heading-l);
+	line-height: 2.3rem;
+}
+.heading-m {
+	font-size: var(--font-size-heading-m);
+	line-height: 1.9rem;
+}
+.heading-s {
+	font-size: var(--font-size-heading-s);
+	letter-spacing: 2.4px;
+	line-height: 1.5rem;
+}
+.heading-xl,
+.heading-l,
+.heading-m,
+.heading-s {
+	font-weight: var(--font-weight-heading);
+	text-transform: capitalize;
+}
+
+/* Text */
+.body-l {
+	font-size: 1.3rem;
+	line-height: 2.3rem;
+}
+.body-m {
+	font-size: 1.2rem;
+	line-height: 1.5rem;
+	font-weight: bold;
+}
+.body-m,
+.body-b {
+	color: var(--dark-grey);
+}
