@@ -5,7 +5,7 @@
 			v-if="showEditBoardModal"
 			@submit.prevent="submitForm"
 			ref="form">
-			<h1 class="heading-l">Edit board</h1>
+			<h1 class="heading-l">Edit Board</h1>
 			<div class="modal__board-name">
 				<label class="modal__board-label body-m" for="board__name">board name</label>
 				<div class="text-field-container width-100">
@@ -74,16 +74,17 @@ import {
 	toggleDeleteBoardModal,
 	toggleEditBoardModal,
 	hideEditBoardModal,
+	getCurrentBoard,
 } from '../js/state';
 import MyTransition from './MyTransition.vue';
 
+const board = getCurrentBoard();
 const form = ref(null);
 const boardCopy = ref();
-const props = defineProps({ board: Object });
 const { showEditBoardModal } = modals;
 watch(
 	showEditBoardModal,
-	() => (boardCopy.value = props.board && JSON.parse(JSON.stringify(props.board)))
+	() => (boardCopy.value = board.value && JSON.parse(JSON.stringify(board.value)))
 );
 
 const toggleDeleteModal = () => {
@@ -117,8 +118,8 @@ const submitForm = () => {
 	populateColumns();
 
 	// change board
-	props.board.name = newBoardName;
-	props.board.columns = boardCopy.value.columns;
+	board.value.name = newBoardName;
+	board.value.columns = boardCopy.value.columns;
 
 	toggleEditBoardModal();
 };

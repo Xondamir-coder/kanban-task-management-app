@@ -18,7 +18,4 @@ const { showErrorBoardModal } = modals;
 	width: 90%;
 	max-width: 40rem;
 }
-h1 {
-	text-transform: initial;
-}
 </style>

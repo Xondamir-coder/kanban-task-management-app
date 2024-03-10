@@ -11,7 +11,7 @@
 				type="checkbox"
 				id="checkbox__hide"
 				@change="toggleSidebar" />
-			<label class="heading-m" for="checkbox__hide">hide sidebar</label>
+			<label class="heading-m" for="checkbox__hide">Hide Sidebar</label>
 		</div>
 	</section>
 	<button

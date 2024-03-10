@@ -1,12 +1,36 @@
-import { computed, reactive, ref } from 'vue';
-import { createModalState, createToggleFunction, getTheme } from './helpers';
-import data from '../data.json';
+import { computed, reactive, ref, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
+import {
+	createModalState,
+	createToggleFunction,
+	getBoards,
+	getTheme,
+	setBoardsToLocalStorage,
+} from './helpers';
 
 // Theme
 export const theme = ref(getTheme());
 
 // Boards
-export const boards = reactive(data.boards);
+export const boards = reactive(getBoards());
+
+// Watch for boards change, set to local storage
+watchEffect(() => setBoardsToLocalStorage(boards));
+
+// current task
+export const task = ref();
+
+// current board
+let currentBoard;
+
+// Function to find the board based on route parameters
+export const getCurrentBoard = () => {
+	if (!currentBoard) {
+		const route = useRoute();
+		currentBoard = computed(() => boards.find(b => b.id === +route?.params.id));
+	}
+	return currentBoard;
+};
 
 // Modals
 export const modals = {
@@ -15,6 +39,8 @@ export const modals = {
 	showDeleteBoardModal: createModalState(),
 	showErrorBoardModal: createModalState(),
 	showMenuModal: createModalState(),
+	showViewTaskModal: createModalState(),
+	showAddTaskModal: createModalState(),
 };
 
 // Any modal active
@@ -32,7 +58,10 @@ export const toggleEditBoardModal = createToggleFunction('showEditBoardModal');
 export const toggleDeleteBoardModal = createToggleFunction('showDeleteBoardModal');
 export const toggleErrorBoardModal = createToggleFunction('showErrorBoardModal');
 export const toggleMenuModal = createToggleFunction('showMenuModal');
+export const toggleViewTaskModal = createToggleFunction('showViewTaskModal');
+export const toggleAddTaskModal = createToggleFunction('showAddTaskModal');
 
 export const hideMenuModal = () => (modals.showMenuModal.value = false);
 export const hideEditBoardModal = () => (modals.showEditBoardModal.value = false);
 export const hideAllModals = () => Object.values(modals).forEach(modal => (modal.value = false));
+export const clearState = () => localStorage.clear();

@@ -16,7 +16,11 @@
 				<span>{{ col.name }} ({{ col.tasks.length }})</span>
 			</h2>
 			<ul class="board__list" role="list">
-				<li class="board__task" v-for="task in col.tasks" :key="task">
+				<li
+					class="board__task"
+					v-for="task in col.tasks"
+					:key="task"
+					@click="toggleView(task)">
 					<h3 class="heading-m">{{ task.title }}</h3>
 					<p class="board__task-completed body-m">
 						{{ task.subtasks.filter(task => task.isCompleted).length }}
@@ -37,7 +41,7 @@
 				<h1 class="heading-xl">new column</h1>
 			</button>
 		</section>
-		<div class="board__empty" v-if="!columns?.length">
+		<div class="board__empty" v-else-if="board">
 			<h4 class="board__empty-heading heading-l">
 				This board is empty. Create a new column to get started.
 			</h4>
@@ -52,14 +56,19 @@
 <script setup>
 import { computed } from 'vue';
 import { getRandomColor } from '../js/helpers';
+import { getCurrentBoard, task, toggleViewTaskModal } from '../js/state';
 
-const props = defineProps({ board: Object });
-const columns = computed(() => props.board?.columns);
+const board = getCurrentBoard();
+const columns = computed(() => board.value?.columns);
 
 const changeOvalColor = event => {
 	const oval = event.target.nextElementSibling.firstElementChild;
 	const color = event.target.value;
 	oval.style.backgroundColor = color;
+};
+const toggleView = curTask => {
+	task.value = curTask;
+	toggleViewTaskModal();
 };
 </script>
 
@@ -117,6 +126,7 @@ const changeOvalColor = event => {
 	gap: 2rem;
 }
 .board__task {
+	cursor: pointer;
 	box-shadow: 0px 4px 6px 0px #364e7e14;
 	background-color: var(--white);
 	padding: 2.3rem 1.6rem;

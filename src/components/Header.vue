@@ -3,7 +3,7 @@
 		<div class="header__logo-box">
 			<img src="../assets/logo-mobile.svg" alt="logo mobile" />
 			<label for="menu-btn" class="header__logo-label">
-				<h1 class="heading-xl">{{ board?.name || 'Home' }}</h1>
+				<h1 class="heading-xl">{{ heading }}</h1>
 			</label>
 			<input
 				type="checkbox"
@@ -15,7 +15,7 @@
 			</MyTransition>
 		</div>
 		<div class="header__cta">
-			<button class="header__cta-add button-primary-l">
+			<button class="header__cta-add button-primary-l" @click="toggleAddTaskModal">
 				<img src="../assets/icon-add-task-mobile.svg" alt="" />
 				<span>add new task</span>
 			</button>
@@ -27,14 +27,27 @@
 </template>
 
 <script setup>
-import { modals, toggleMenuModal, toggleEditBoardModal, toggleErrorBoardModal } from '../js/state';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+import {
+	modals,
+	toggleMenuModal,
+	toggleEditBoardModal,
+	toggleErrorBoardModal,
+	getCurrentBoard,
+	toggleAddTaskModal,
+} from '../js/state';
 import MyTransition from './MyTransition.vue';
 import NavMenu from './NavMenu.vue';
 
-const props = defineProps({ board: Object });
+const board = getCurrentBoard();
+const route = useRoute();
 const { showMenuModal } = modals;
 
-const toggleEditModal = () => (props.board ? toggleEditBoardModal() : toggleErrorBoardModal());
+const heading = computed(() =>
+	board.value ? board.value.name : route.name === 'home' ? 'Home' : 'Board not found'
+);
+const toggleEditModal = () => (board.value ? toggleEditBoardModal() : toggleErrorBoardModal());
 </script>
 
 <style scoped>

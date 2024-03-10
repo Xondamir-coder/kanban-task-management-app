@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import { modals } from './state';
+import data from '../data.json';
 
 const app = document.querySelector('#app');
 
@@ -11,6 +12,9 @@ export const getTheme = () => {
 export const toggleAppClosedClass = () => app.classList.toggle('app--closed');
 export const getEmptyBoard = () => ({ id: 0, name: '', columns: [] });
 export const getEmptyCol = () => ({ name: '', tasks: [] });
+export const getBoards = () => JSON.parse(localStorage.getItem('boards')) || data.boards;
+export const setBoardsToLocalStorage = boards =>
+	localStorage.setItem('boards', JSON.stringify(boards));
 export const createModalState = () => ref(false);
 export const createToggleFunction = modal => () => (modals[modal].value = !modals[modal].value);
 export const getRandomColor = () => {

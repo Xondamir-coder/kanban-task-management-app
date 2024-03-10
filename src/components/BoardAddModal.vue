@@ -5,7 +5,7 @@
 			v-if="showAddBoardModal"
 			ref="form"
 			@submit.prevent="submitForm">
-			<h1 class="heading-l">add new board</h1>
+			<h1 class="heading-l">Add New Board</h1>
 			<div class="modal__board-name">
 				<label class="modal__board-label body-m" for="board__name">name</label>
 				<div class="text-field-container">

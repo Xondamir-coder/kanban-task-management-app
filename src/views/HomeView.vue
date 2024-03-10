@@ -9,9 +9,6 @@
 	background-color: var(--light-grey);
 	padding: 2.4rem;
 }
-.home h1 {
-	text-transform: initial;
-}
 body.dark .home {
 	background-color: var(--very-dark-grey);
 }

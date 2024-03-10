@@ -22,7 +22,6 @@
 .heading-m,
 .heading-s {
 	font-weight: var(--font-weight-heading);
-	text-transform: capitalize;
 }
 
 /* Text */
