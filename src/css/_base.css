@@ -44,6 +44,7 @@ body {
 }
 #app {
 	display: grid;
+	grid-template-rows: 10rem calc(100vh - 10rem);
 	transition: grid-template-columns 0.5s;
 }
 body.dark #app {
@@ -78,6 +79,7 @@ ul[role='list'] {
 }
 @media only screen and (max-width: 600px) {
 	#app {
+		height: 100dvh;
 		grid-template-areas:
 			'header'
 			'main';

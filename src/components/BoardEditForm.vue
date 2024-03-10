@@ -1,6 +1,10 @@
 <template>
 	<MyTransition>
-		<form class="modal" v-if="showEditBoardModal" @submit.prevent="submitForm" ref="form">
+		<form
+			class="modal modal__board"
+			v-if="showEditBoardModal"
+			@submit.prevent="submitForm"
+			ref="form">
 			<h1 class="heading-l">Edit board</h1>
 			<div class="modal__board-name">
 				<label class="modal__board-label body-m" for="board__name">board name</label>

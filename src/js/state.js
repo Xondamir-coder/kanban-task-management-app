@@ -1,5 +1,5 @@
 import { computed, reactive, ref } from 'vue';
-import { getTheme } from './helpers';
+import { createModalState, createToggleFunction, getTheme } from './helpers';
 import data from '../data.json';
 
 // Theme
@@ -9,8 +9,6 @@ export const theme = ref(getTheme());
 export const boards = reactive(data.boards);
 
 // Modals
-const createModalState = () => ref(false);
-
 export const modals = {
 	showAddBoardModal: createModalState(),
 	showEditBoardModal: createModalState(),
@@ -23,8 +21,6 @@ export const modals = {
 export const anyModalActive = computed(() => Object.values(modals).some(modal => modal.value));
 
 // Toggle functions
-const createToggleFunction = modal => () => (modals[modal].value = !modals[modal].value);
-
 export const toggleTheme = () => {
 	theme.value = theme.value === 'light' ? 'dark' : 'light';
 	localStorage.setItem('theme', theme.value);
@@ -38,10 +34,5 @@ export const toggleErrorBoardModal = createToggleFunction('showErrorBoardModal')
 export const toggleMenuModal = createToggleFunction('showMenuModal');
 
 export const hideMenuModal = () => (modals.showMenuModal.value = false);
-
 export const hideEditBoardModal = () => (modals.showEditBoardModal.value = false);
-
-export const hideAllModals = () =>
-	Object.values(modals).forEach(modal => {
-		modal.value = false;
-	});
+export const hideAllModals = () => Object.values(modals).forEach(modal => (modal.value = false));

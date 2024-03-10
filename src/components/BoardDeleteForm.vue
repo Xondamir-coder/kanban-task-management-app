@@ -1,6 +1,6 @@
 <template>
 	<MyTransition>
-		<div class="modal modal__board-delete" v-if="showDeleteBoardModal">
+		<div class="modal modal__board modal__board-delete" v-if="showDeleteBoardModal">
 			<h2 class="modal__board-heading heading-l">Delete this board?</h2>
 			<p class="body-l">
 				Are you sure you want to delete the ‘{{ board.name }}’ board? This action will
@@ -34,11 +34,17 @@ const props = defineProps({ board: Object });
 
 <style scoped>
 .modal__board-delete {
-	width: 100%;
+	width: 90%;
 	max-width: 45rem;
 }
 .modal__board-btns {
 	display: flex;
 	justify-content: space-around;
+	flex-wrap: wrap;
+}
+@media only screen and (max-width: 500px) {
+	.modal__board-btns {
+		gap: 1rem;
+	}
 }
 </style>

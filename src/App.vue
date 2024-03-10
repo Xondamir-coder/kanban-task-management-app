@@ -1,7 +1,7 @@
 <template>
 	<!-- Layout -->
 	<Header :board="board" />
-	<RouterView />
+	<RouterView :board="board" />
 	<Sidebar />
 
 	<!-- Modals/Forms -->
