@@ -1,13 +1,15 @@
 <template>
 	<MyTransition>
-		<form v-if="showAddTaskModal" class="modal modal__task-add" @submit.prevent=""></form>
+		<form
+			v-if="showModal === 'task-add'"
+			class="modal modal__task-add"
+			@submit.prevent=""></form>
 	</MyTransition>
 </template>
 
 <script setup>
 import MyTransition from './MyTransition.vue';
-import { modals } from '../js/state';
-const { showAddTaskModal } = modals;
+import { showModal } from '../js/state';
 </script>
 
 <style coped></style>

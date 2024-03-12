@@ -56,7 +56,7 @@
 <script setup>
 import { computed } from 'vue';
 import { getRandomColor } from '../js/helpers';
-import { getCurrentBoard, task, toggleViewTaskModal } from '../js/state';
+import { getCurrentBoard, task, toggleModal } from '../js/state';
 
 const board = getCurrentBoard();
 const columns = computed(() => board.value?.columns);
@@ -68,7 +68,7 @@ const changeOvalColor = event => {
 };
 const toggleView = curTask => {
 	task.value = curTask;
-	toggleViewTaskModal();
+	toggleModal('task-view');
 };
 </script>
 

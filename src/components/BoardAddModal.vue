@@ -2,7 +2,7 @@
 	<MyTransition>
 		<form
 			class="modal modal__board"
-			v-if="showAddBoardModal"
+			v-if="showModal === 'board-add'"
 			ref="form"
 			@submit.prevent="submitForm">
 			<h1 class="heading-l">Add New Board</h1>
@@ -64,19 +64,14 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { boards, toggleAddBoardModal, modals } from '../js/state';
+import { boards, showModal } from '../js/state';
 import { getEmptyCol, getEmptyBoard } from '../js/helpers';
 import MyTransition from './MyTransition.vue';
 
 const router = useRouter();
 const form = ref(null);
 const newBoard = ref(getEmptyBoard());
-const { showAddBoardModal } = modals;
 
-const toggleModal = () => {
-	newBoard.value = getEmptyBoard();
-	toggleAddBoardModal();
-};
 const submitForm = () => {
 	const formData = new FormData(form.value);
 	const cols = Array.from(formData).filter(([key]) => key.includes('col'));
@@ -89,6 +84,9 @@ const submitForm = () => {
 	// add to the boards and route to it
 	boards.push(newBoard.value);
 	router.push(`/board/${newBoard.value.id}`);
+
+	// Close modal and init newBoard.value
+	newBoard.value = getEmptyBoard();
 	toggleModal();
 };
 const addColumn = () => {

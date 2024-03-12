@@ -4,7 +4,7 @@
 			<img v-if="theme === 'light'" src="../assets/logo-dark.svg" alt="logo dark" />
 			<img v-else src="../assets/logo-light.svg" alt="logo light" />
 		</RouterLink>
-		<NavMenu @toggle-form="toggleForm" />
+		<NavMenu />
 		<div class="sidebar__hide">
 			<input
 				class="sidebar__hide-checkbox"
@@ -31,7 +31,6 @@ import NavMenu from './NavMenu.vue';
 
 const sidebar = ref(null);
 const showSidebarBtn = ref(null);
-const showForm = ref(false);
 
 const toggleSidebar = () => {
 	const curWidth = sidebar.value.offsetWidth;
@@ -40,7 +39,6 @@ const toggleSidebar = () => {
 	showSidebarBtn.value.classList.toggle('sidebar__show--hidden');
 	toggleAppClosedClass();
 };
-const toggleForm = () => (showForm.value = !showForm.value);
 </script>
 
 <style scoped>

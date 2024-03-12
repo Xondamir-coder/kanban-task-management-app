@@ -1,7 +1,12 @@
 <template>
 	<MyTransition>
-		<div v-if="showViewTaskModal" class="modal modal__task-view">
-			<h1 class="heading-l">{{ task.title }}</h1>
+		<div v-if="showModal === 'task-view'" class="modal modal__task-view">
+			<div class="modal__task-view_head">
+				<h1 class="heading-l">{{ task.title }}</h1>
+				<button class="modal__task-view_btn" @click="toggleModal('task-edit')">
+					<img src="../assets/icon-vertical-ellipsis.svg" alt="menu" />
+				</button>
+			</div>
 			<p v-if="task.description" class="modal__task-view_desc body-l">
 				{{ task.description }}
 			</p>
@@ -14,16 +19,18 @@
 						class="modal__task-view_item"
 						v-for="(subtask, i) in task.subtasks"
 						:key="i">
-						<input
-							class="checkbox"
-							type="checkbox"
-							name="checkbox"
-							:id="`${subtask.title}-${i}`"
-							:checked="subtask.isCompleted"
-							@change="changeSubtaskStatus(subtask)" />
-						<label :for="`${subtask.title}-${i}`" class="checkbox-label">{{
-							subtask.title
-						}}</label>
+						<label class="checkbox-container" :for="`${subtask.title}-${i}`">
+							<input
+								class="checkbox"
+								type="checkbox"
+								name="checkbox"
+								:id="`${subtask.title}-${i}`"
+								:checked="subtask.isCompleted"
+								@change="changeSubtaskStatus(subtask)" />
+							<label :for="`${subtask.title}-${i}`" class="checkbox-label">{{
+								subtask.title
+							}}</label>
+						</label>
 					</li>
 				</ul>
 			</div>
@@ -50,9 +57,8 @@
 
 <script setup>
 import { computed } from 'vue';
-import { modals, task } from '../js/state';
+import { showModal, task, toggleModal } from '../js/state';
 import MyTransition from './MyTransition.vue';
-const { showViewTaskModal } = modals;
 
 const taskStates = ['Todo', 'Doing', 'Done'];
 const numOfCompletedSubtasks = computed(
@@ -95,10 +101,16 @@ const changeTaskStatus = newStatus => {
 .modal__task-view_item {
 	background-color: var(--light-grey);
 	padding: 1rem;
-	display: flex;
-	align-items: center;
-	gap: 1.6rem;
 	border-radius: 0.5rem;
+}
+.modal__task-view_head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.modal__task-view_btn {
+	background-color: transparent;
+	padding-left: 2rem;
 }
 .modal__task-view_desc,
 .modal__task-view_num {

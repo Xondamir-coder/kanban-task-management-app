@@ -1,5 +1,4 @@
-import { ref } from 'vue';
-import { modals } from './state';
+import { reactive, ref } from 'vue';
 import data from '../data.json';
 
 const app = document.querySelector('#app');
@@ -7,16 +6,13 @@ const app = document.querySelector('#app');
 export const getTheme = () => {
 	const theme = localStorage.getItem('theme') || 'light';
 	theme === 'dark' && document.body.classList.add('dark');
-	return theme;
+	return ref(theme);
 };
+export const getBoards = () => reactive(JSON.parse(localStorage.getItem('boards')) || data.boards);
 export const toggleAppClosedClass = () => app.classList.toggle('app--closed');
 export const getEmptyBoard = () => ({ id: 0, name: '', columns: [] });
 export const getEmptyCol = () => ({ name: '', tasks: [] });
-export const getBoards = () => JSON.parse(localStorage.getItem('boards')) || data.boards;
-export const setBoardsToLocalStorage = boards =>
-	localStorage.setItem('boards', JSON.stringify(boards));
-export const createModalState = () => ref(false);
-export const createToggleFunction = modal => () => (modals[modal].value = !modals[modal].value);
+export const watchBoards = boards => localStorage.setItem('boards', JSON.stringify(boards));
 export const getRandomColor = () => {
 	// Generate random values for red, green, and blue components
 	var r = Math.floor(Math.random() * 256);

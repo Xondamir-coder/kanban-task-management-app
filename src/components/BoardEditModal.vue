@@ -2,7 +2,7 @@
 	<MyTransition>
 		<form
 			class="modal modal__board"
-			v-if="showEditBoardModal"
+			v-if="showModal === 'board-edit'"
 			@submit.prevent="submitForm"
 			ref="form">
 			<h1 class="heading-l">Edit Board</h1>
@@ -69,28 +69,15 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import {
-	modals,
-	toggleDeleteBoardModal,
-	toggleEditBoardModal,
-	hideEditBoardModal,
-	getCurrentBoard,
-} from '../js/state';
+import { getCurrentBoard, showModal, toggleModal } from '../js/state';
 import MyTransition from './MyTransition.vue';
 
 const board = getCurrentBoard();
 const form = ref(null);
 const boardCopy = ref();
-const { showEditBoardModal } = modals;
-watch(
-	showEditBoardModal,
-	() => (boardCopy.value = board.value && JSON.parse(JSON.stringify(board.value)))
-);
+watch(showModal, () => (boardCopy.value = board.value && JSON.parse(JSON.stringify(board.value))));
 
-const toggleDeleteModal = () => {
-	hideEditBoardModal();
-	toggleDeleteBoardModal();
-};
+const toggleDeleteModal = () => toggleModal('board-delete');
 const removeColumn = name => {
 	const cols = boardCopy.value.columns.filter(col => col.name !== name);
 	boardCopy.value.columns = cols;
@@ -121,6 +108,6 @@ const submitForm = () => {
 	board.value.name = newBoardName;
 	board.value.columns = boardCopy.value.columns;
 
-	toggleEditBoardModal();
+	toggleModal();
 };
 </script>

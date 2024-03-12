@@ -1,11 +1,11 @@
 <template>
 	<Transition name="fade">
-		<div class="overlay" v-if="anyModalActive" @click="hideAllModals"></div>
+		<div class="overlay" v-if="showModal" @click="toggleModal"></div>
 	</Transition>
 </template>
 
 <script setup>
-import { anyModalActive, hideAllModals } from '../js/state';
+import { showModal, toggleModal } from '../js/state';
 </script>
 
 <style scoped>

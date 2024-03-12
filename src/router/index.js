@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { getCurrentBoard, toggleModal } from '../js/state';
 import HomeView from '../views/HomeView.vue';
 import BoardView from '../views/BoardView.vue';
-import { getCurrentBoard, toggleErrorBoardModal } from '../js/state';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,7 +22,7 @@ const router = createRouter({
 router.afterEach(to => {
 	const currentBoard = getCurrentBoard();
 	if (to.name === 'board' && !currentBoard.value) {
-		toggleErrorBoardModal();
+		toggleModal('board-error');
 		router.push('/');
 	}
 });

@@ -13,6 +13,7 @@
 	<!-- Task Modals -->
 	<TaskViewModal />
 	<TaskAddModal />
+	<TaskEditModal />
 
 	<!-- Overlay -->
 	<Overlay />
@@ -29,4 +30,5 @@ import BoardErrorModal from './components/BoardErrorModal.vue';
 import BoardDeleteModal from './components/BoardDeleteModal.vue';
 import TaskViewModal from './components/TaskViewModal.vue';
 import TaskAddModal from './components/TaskAddModal.vue';
+import TaskEditModal from './components/TaskEditModal.vue';
 </script>
