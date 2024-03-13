@@ -3,9 +3,15 @@
 		<div v-if="showModal === 'task-view'" class="modal modal__task-view">
 			<div class="modal__task-view_head">
 				<h1 class="heading-l">{{ task.title }}</h1>
-				<button class="modal__task-view_btn" @click="toggleModal('task-edit')">
-					<img src="../assets/icon-vertical-ellipsis.svg" alt="menu" />
-				</button>
+				<input class="menu-checkbox" type="checkbox" id="task__menu" />
+				<div class="menu modal__task-view_menu">
+					<button class="body-l" @click="toggleModal('task-edit')">
+						<label for="task__menu">Edit Task</label>
+					</button>
+					<button class="body-l" @click="toggleModal('task-delete')">
+						<label for="task__menu">Delete Task</label>
+					</button>
+				</div>
 			</div>
 			<p v-if="task.description" class="modal__task-view_desc body-l">
 				{{ task.description }}
@@ -34,45 +40,22 @@
 					</li>
 				</ul>
 			</div>
-			<div class="modal__task-view_status">
-				<h2 class="modal__task-view_status-title">current status</h2>
-				<input class="dropdown-checkbox" type="checkbox" id="dropdown-input" />
-				<label class="dropdown-label body-l" for="dropdown-input">
-					<span>{{ task.status || 'None' }}</span>
-					<img src="../assets/icon-chevron-down.svg" alt="down" />
-				</label>
-				<ul class="dropdown modal__task-view_status_list" role="list">
-					<li
-						class="dropdown-item"
-						v-for="state in taskStates"
-						:key="state"
-						@click="changeTaskStatus(state)">
-						<p class="body-l">{{ state }}</p>
-					</li>
-				</ul>
-			</div>
+			<TaskStatus :data="task" />
 		</div>
 	</MyTransition>
 </template>
 
 <script setup>
 import { computed } from 'vue';
-import { showModal, task, toggleModal } from '../js/state';
-import MyTransition from './MyTransition.vue';
+import { showModal, task, toggleModal } from '../../js/state';
+import MyTransition from '../MyTransition.vue';
+import TaskStatus from './TaskStatus.vue';
 
-const taskStates = ['Todo', 'Doing', 'Done'];
 const numOfCompletedSubtasks = computed(
 	() => task.value.subtasks.filter(subtask => subtask.isCompleted).length
 );
 
 const changeSubtaskStatus = curSubtask => (curSubtask.isCompleted = !curSubtask.isCompleted);
-const changeTaskStatus = newStatus => {
-	const dropdown = event.target.closest('.dropdown');
-	if (!dropdown) return;
-	const checkbox = dropdown.previousElementSibling.previousElementSibling;
-	checkbox.checked = !checkbox.checked;
-	task.value.status = newStatus;
-};
 </script>
 
 <style scoped>
@@ -87,11 +70,6 @@ const changeTaskStatus = newStatus => {
 	display: flex;
 	flex-direction: column;
 	gap: 1.6rem;
-}
-.modal__task-view_status {
-	display: flex;
-	flex-direction: column;
-	gap: 0.8rem;
 }
 .modal__task-view_list {
 	display: flex;
@@ -116,9 +94,13 @@ const changeTaskStatus = newStatus => {
 .modal__task-view_num {
 	color: var(--medium-grey);
 }
-.modal__task-view_status-title {
-	text-transform: capitalize;
-	font-size: var(--font-size-heading-s);
+.modal__task-view_menu {
+	top: 7rem;
+	right: 3rem;
+}
+
+body.dark .modal__task-view_menu {
+	background-color: var(--very-dark-grey);
 }
 body.dark .modal__task-view_num {
 	color: var(--white);

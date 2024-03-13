@@ -15,7 +15,7 @@
 				</label>
 				<span>{{ col.name }} ({{ col.tasks.length }})</span>
 			</h2>
-			<ul class="board__list" role="list">
+			<TransitionGroup name="list" tag="ul" role="list" class="board__list">
 				<li
 					class="board__task"
 					v-for="task in col.tasks"
@@ -29,7 +29,7 @@
 						subtasks
 					</p>
 				</li>
-			</ul>
+			</TransitionGroup>
 		</section>
 		<section class="board__column-add" v-if="columns?.length">
 			<button class="board__column-add_btn">

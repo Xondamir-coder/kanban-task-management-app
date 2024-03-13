@@ -9,6 +9,7 @@
 				type="checkbox"
 				id="menu-btn"
 				class="header__logo-checkbox"
+				:checked="showModal === 'header-menu'"
 				@change="toggleModal('header-menu')" />
 			<MyTransition>
 				<NavMenu v-if="showModal === 'header-menu'" class="header__list" />
@@ -19,9 +20,15 @@
 				<img src="../assets/icon-add-task-mobile.svg" alt="" />
 				<span>add new task</span>
 			</button>
-			<button class="header__cta-edit" @click="toggleModal('board-edit')">
-				<img src="../assets/icon-vertical-ellipsis.svg" alt="edit board" />
-			</button>
+			<input class="menu-checkbox" type="checkbox" id="menu__checkbox" />
+			<div class="header__cta-menu menu">
+				<button class="body-l" @click="toggleModal('board-edit')">
+					<label for="menu__checkbox">Edit Board</label>
+				</button>
+				<button class="body-l" @click="toggleModal('board-delete')">
+					<label for="menu__checkbox">Delete Board</label>
+				</button>
+			</div>
 		</div>
 	</header>
 </template>
@@ -30,8 +37,8 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { toggleModal, showModal, getCurrentBoard } from '../js/state';
-import MyTransition from './MyTransition.vue';
-import NavMenu from './NavMenu.vue';
+import MyTransition from '../components/MyTransition.vue';
+import NavMenu from '../components/NavMenu.vue';
 
 const board = getCurrentBoard();
 const route = useRoute();
@@ -51,9 +58,6 @@ const heading = computed(() =>
 	transition: background-color 0.5s;
 	position: relative;
 }
-body.dark .header {
-	background-color: var(--dark-grey);
-}
 .header__error {
 	padding: 3.2rem;
 	background-color: var(--white);
@@ -62,24 +66,21 @@ body.dark .header {
 .header__error-heading {
 	text-transform: none;
 }
-body.dark .header__error {
-	background-color: var(--dark-grey);
-}
 .header__cta {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 0.5rem;
+	gap: 1.5rem;
+}
+.header__cta-menu {
+	top: 9rem;
+	right: 3rem;
 }
 .header__cta .header__cta-add {
 	padding: 1.5rem 2.4rem;
 	display: flex;
 	align-items: center;
 	gap: 0.8rem;
-}
-.header__cta-edit {
-	background-color: transparent;
-	padding: 0 1.5rem;
 }
 .header__logo-label {
 	pointer-events: none;
@@ -91,12 +92,16 @@ body.dark .header__error {
 .header__logo-checkbox {
 	display: none;
 }
+.header__logo-checkbox:checked::before {
+	transform: rotate(180deg);
+}
 .header__logo-checkbox::before {
 	content: url(../assets/icon-chevron-down.svg);
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%);
+	translate: -50% -50%;
+	transition: transform 0.5s;
 }
 .header__logo-box img {
 	display: none;
@@ -114,10 +119,6 @@ body.dark .header__error {
 	justify-content: space-around;
 	flex-wrap: wrap;
 }
-body.dark .header__delete {
-	background-color: var(--dark-grey);
-	padding: 3rem;
-}
 .header__list {
 	width: 100%;
 	max-width: 30rem;
@@ -129,10 +130,18 @@ body.dark .header__delete {
 	border-radius: 10px;
 	background-color: var(--white);
 }
-body.dark .header__list {
+body.dark .header__delete {
+	padding: 3rem;
+}
+body.dark .header__error,
+body.dark .header,
+body.dark .header__list,
+body.dark .header__delete {
 	background-color: var(--dark-grey);
 }
-
+body.dark .header__cta-menu {
+	background-color: var(--very-dark-grey);
+}
 /* Transition */
 .list-move,
 .list-enter-active,

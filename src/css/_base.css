@@ -22,6 +22,7 @@
 	--red: rgb(234, 85, 85);
 	--red-hover: rgb(255, 152, 152);
 	--input-border: rgb(130, 143, 163, 0.25);
+	--purple-box-shadow: 0px 0px 11px 4px rgba(99, 95, 199, 0.5);
 
 	/* Typography */
 	--font-family: 'Plus Jakarta Sans', sans-serif;

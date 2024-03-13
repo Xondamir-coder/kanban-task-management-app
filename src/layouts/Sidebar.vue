@@ -5,14 +5,14 @@
 			<img v-else src="../assets/logo-light.svg" alt="logo light" />
 		</RouterLink>
 		<NavMenu />
-		<div class="sidebar__hide">
+		<label class="sidebar__hide">
 			<input
 				class="sidebar__hide-checkbox"
 				type="checkbox"
 				id="checkbox__hide"
 				@change="toggleSidebar" />
 			<label class="heading-m" for="checkbox__hide">Hide Sidebar</label>
-		</div>
+		</label>
 	</section>
 	<button
 		ref="showSidebarBtn"
@@ -27,7 +27,7 @@ import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
 import { theme } from '../js/state';
 import { toggleAppClosedClass } from '../js/helpers';
-import NavMenu from './NavMenu.vue';
+import NavMenu from '../components/NavMenu.vue';
 
 const sidebar = ref(null);
 const showSidebarBtn = ref(null);
@@ -80,18 +80,36 @@ body.dark .sidebar {
 	padding: 2rem;
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
-	transition: transform 0.5s, opacity 0.5s;
+	transition-property: transform, opacity, background-color;
+	transition-duration: 0.5s;
+}
+.sidebar__show-btn:hover {
+	background-color: var(--main-purple-hover);
 }
 .sidebar__show--hidden {
 	opacity: 0;
 	transform: translateX(-120%);
 }
 .sidebar__hide {
-	margin-top: 2.2rem;
 	display: flex;
 	align-items: center;
 	gap: 1.5rem;
-	margin-left: var(--sidebar-left-margin);
+	margin-top: 1rem;
+	padding: 1.6rem var(--sidebar-left-margin);
+	border-top-right-radius: 2rem;
+	border-bottom-right-radius: 2rem;
+	transition-property: color, background-color;
+	transition-duration: 0.5s;
+}
+.sidebar__hide > * {
+	cursor: pointer;
+}
+.sidebar__hide label {
+	flex-grow: 1;
+}
+.sidebar__hide:hover {
+	color: var(--main-purple);
+	background-color: var(--light-grey);
 }
 .sidebar__hide-checkbox {
 	width: 1.6rem;
@@ -103,9 +121,6 @@ body.dark .sidebar {
 	height: 100%;
 	position: absolute;
 	inset: 0;
-}
-.sidebar__hide > * {
-	cursor: pointer;
 }
 
 @media only screen and (max-width: 600px) {

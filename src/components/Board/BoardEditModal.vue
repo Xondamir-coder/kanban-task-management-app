@@ -22,29 +22,7 @@
 			</div>
 			<div class="modal__board-cols">
 				<label class="modal__board-label body-m">board columns</label>
-				<TransitionGroup name="list" tag="ul" class="modal__board-list">
-					<li
-						class="modal__board-list_item"
-						v-for="(col, i) in boardCopy?.columns"
-						:key="col">
-						<div class="text-field-container width-100">
-							<input
-								class="text-field body-l flex-grow-1"
-								type="text"
-								required
-								placeholder="e.g Todo"
-								:value="col?.name"
-								:name="`col ${i}`"
-								:id="`input-${i}`" />
-							<label :for="`input-${i}`" class="text-field-label body-l"
-								>Can't be empty</label
-							>
-						</div>
-						<button type="button" @click="removeColumn(col.name)">
-							<img src="../assets/icon-cross.svg" alt="cross icon" />
-						</button>
-					</li>
-				</TransitionGroup>
+				<FormColumns :cols="boardCopy?.columns" @delete-col="removeColumn" />
 			</div>
 			<button class="model__board-add_btn button-secondary" type="button" @click="addColumn">
 				<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
@@ -53,12 +31,6 @@
 						d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z" />
 				</svg>
 				add new column
-			</button>
-			<button
-				class="model__board-delete_btn button-destructive"
-				type="button"
-				@click="toggleDeleteModal">
-				delete board
 			</button>
 			<button class="model__board-save_btn button-primary-s" type="submit">
 				save changes
@@ -69,29 +41,26 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import { getCurrentBoard, showModal, toggleModal } from '../js/state';
-import MyTransition from './MyTransition.vue';
+import { getCurrentBoard, showModal, toggleModal } from '../../js/state';
+import MyTransition from '../MyTransition.vue';
+import FormColumns from '../FormColumns.vue';
+import { getEmptyBoardCol } from '../../js/helpers';
 
 const board = getCurrentBoard();
 const form = ref(null);
 const boardCopy = ref();
-watch(showModal, () => (boardCopy.value = board.value && JSON.parse(JSON.stringify(board.value))));
+watch(showModal, () => {
+	if (!showModal.value.includes('board')) return;
+	boardCopy.value = board.value && JSON.parse(JSON.stringify(board.value));
+});
 
-const toggleDeleteModal = () => toggleModal('board-delete');
 const removeColumn = name => {
 	const cols = boardCopy.value.columns.filter(col => col.name !== name);
 	boardCopy.value.columns = cols;
 };
 const addColumn = () => {
 	populateColumns();
-
-	// add empty col
-	const emptyCol = { name: '', tasks: [] };
-	boardCopy.value.columns.push(emptyCol);
-
-	// focus the input
-	const list = document.querySelector('.modal__board-list');
-	setTimeout(() => list.lastChild.firstChild.firstChild.focus(), 50);
+	boardCopy.value.columns.push(getEmptyBoardCol());
 };
 const populateColumns = () => {
 	const formData = new FormData(form.value);

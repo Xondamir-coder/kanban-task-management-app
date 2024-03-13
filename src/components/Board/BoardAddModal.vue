@@ -1,10 +1,6 @@
 <template>
-	<MyTransition>
-		<form
-			class="modal modal__board"
-			v-if="showModal === 'board-add'"
-			ref="form"
-			@submit.prevent="submitForm">
+	<Modal type="board" action="add">
+		<form class="modal__board" ref="form" @submit.prevent="submitForm">
 			<h1 class="heading-l">Add New Board</h1>
 			<div class="modal__board-name">
 				<label class="modal__board-label body-m" for="board__name">name</label>
@@ -21,32 +17,9 @@
 			</div>
 			<div class="modal__board-cols">
 				<label class="modal__board-label body-m">columns</label>
-				<TransitionGroup name="list" tag="ul" class="modal__board-list" role="list">
-					<li
-						class="modal__board-list_item"
-						v-for="(col, i) in newBoard.columns"
-						:key="col">
-						<div class="text-field-container width-100">
-							<input
-								class="text-field body-l"
-								type="text"
-								required
-								name="col-0"
-								placeholder="e.g Todo"
-								:name="`col ${i}`"
-								:value="col.name"
-								:id="`input-${i}`" />
-							<label class="text-field-label body-l" :for="`input-${i}`"
-								>Can't be empty</label
-							>
-						</div>
-						<button type="button" @click="removeColumn(col.name)">
-							<img src="../assets/icon-cross.svg" alt="cross icon" />
-						</button>
-					</li>
-				</TransitionGroup>
+				<FormColumns :cols="newBoard.columns" @delete-col="removeColumn" />
 			</div>
-			<button class="model__board-add_btn button-secondary" type="button" @click="addColumn">
+			<button class="modal__board-add_btn button-secondary" type="button" @click="addColumn">
 				<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
 					<path
 						fill="#635FC7"
@@ -54,19 +27,20 @@
 				</svg>
 				add new column
 			</button>
-			<button class="model__board-create_btn button-primary-s" type="submit">
+			<button class="modal__board-create_btn button-primary-s" type="submit">
 				create new board
 			</button>
 		</form>
-	</MyTransition>
+	</Modal>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { boards, showModal } from '../js/state';
-import { getEmptyCol, getEmptyBoard } from '../js/helpers';
-import MyTransition from './MyTransition.vue';
+import { boards, showModal, toggleModal } from '../../js/state';
+import { getEmptyBoardCol, getEmptyBoard } from '../../js/helpers';
+import Modal from '../Modal.vue';
+import FormColumns from '../FormColumns.vue';
 
 const router = useRouter();
 const form = ref(null);
@@ -93,7 +67,7 @@ const addColumn = () => {
 	populateColumns();
 
 	// add empty col
-	const emptyCol = getEmptyCol();
+	const emptyCol = getEmptyBoardCol();
 	newBoard.value.columns.push(emptyCol);
 
 	// focus the input
@@ -110,3 +84,5 @@ const removeColumn = name => {
 	newBoard.value.columns = cols;
 };
 </script>
+
+<style scoped></style>

@@ -7,8 +7,8 @@
 </template>
 
 <script setup>
-import { showModal } from '../js/state';
-import MyTransition from './MyTransition.vue';
+import { showModal } from '../../js/state';
+import MyTransition from '../MyTransition.vue';
 </script>
 
 <style scoped>
@@ -18,3 +18,4 @@ import MyTransition from './MyTransition.vue';
 	max-width: 40rem;
 }
 </style>
+../../js/state

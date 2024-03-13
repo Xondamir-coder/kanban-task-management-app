@@ -21,3 +21,6 @@
 .flex-grow-1 {
 	flex-grow: 1;
 }
+.capitalize {
+	text-transform: capitalize;
+}

@@ -72,12 +72,16 @@ import { theme, boards, toggleTheme, toggleModal } from '../js/state';
 	border-bottom-right-radius: 2rem;
 	transition: background-color 0.5s, color 0.5s;
 }
+.nav__link:hover {
+	color: var(--main-purple);
+	background-color: var(--light-grey);
+}
 .nav__link svg path {
 	transition: fill 0.5s;
 }
 .nav__link-active {
-	background-color: var(--main-purple);
-	color: var(--white);
+	background-color: var(--main-purple) !important;
+	color: var(--white) !important;
 }
 .nav__link-active svg path {
 	fill: var(--white);
@@ -90,7 +94,6 @@ import { theme, boards, toggleTheme, toggleModal } from '../js/state';
 	gap: 1.6rem;
 	padding: 1.6rem var(--sidebar-left-margin);
 }
-
 .nav__cta {
 	margin-top: auto;
 	display: flex;
@@ -122,15 +125,16 @@ import { theme, boards, toggleTheme, toggleModal } from '../js/state';
 	gap: 1.5rem;
 	transition: background-color 0.5s;
 }
-body.dark .nav__theme {
-	background-color: var(--very-dark-grey);
-}
 .nav__theme-checkbox {
 	width: 4rem;
 	height: 2rem;
 	background-color: var(--main-purple);
 	border-radius: 1rem;
 	cursor: pointer;
+	transition: background-color 0.3s;
+}
+.nav__theme-checkbox:hover {
+	background-color: var(--main-purple-hover);
 }
 .nav__theme-checkbox:checked::before {
 	transform: translateX(140%);
@@ -146,10 +150,16 @@ body.dark .nav__theme {
 	background-color: var(--white);
 	transition: transform 0.3s;
 }
+body.dark .nav__theme {
+	background-color: var(--very-dark-grey);
+}
+body.dark .nav__link:hover {
+	background-color: var(--white);
+}
 
-@media only screen and (max-width: 800px) {
-	.nav__item-add h3 svg {
-		display: none;
+@media only screen and (max-width: 500px) {
+	.nav__container {
+		box-shadow: var(--purple-box-shadow);
 	}
 }
 </style>

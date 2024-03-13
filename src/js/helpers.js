@@ -11,7 +11,14 @@ export const getTheme = () => {
 export const getBoards = () => reactive(JSON.parse(localStorage.getItem('boards')) || data.boards);
 export const toggleAppClosedClass = () => app.classList.toggle('app--closed');
 export const getEmptyBoard = () => ({ id: 0, name: '', columns: [] });
-export const getEmptyCol = () => ({ name: '', tasks: [] });
+export const getEmptyBoardCol = () => ({ name: '', tasks: [] });
+export const getEmptyTask = () => ({
+	title: '',
+	description: '',
+	status: '',
+	subtasks: [{ title: '', isCompleted: false }],
+});
+export const getEmptyTaskCol = () => ({ title: '', isCompleted: false });
 export const watchBoards = boards => localStorage.setItem('boards', JSON.stringify(boards));
 export const getRandomColor = () => {
 	// Generate random values for red, green, and blue components
