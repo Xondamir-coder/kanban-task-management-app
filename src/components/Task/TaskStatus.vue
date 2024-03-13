@@ -6,7 +6,7 @@
 			<span>{{ data.status || 'None' }}</span>
 			<img src="../../assets/icon-chevron-down.svg" alt="down" />
 		</label>
-		<ul class="dropdown status_list" role="list" v-bind="$attrs">
+		<ul class="dropdown status_list" role="list">
 			<li
 				class="dropdown-item"
 				v-for="state in taskStates"
@@ -19,6 +19,9 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+import { getCurrentBoard } from '../../js/state';
+
 const props = defineProps({
 	data: Object,
 });
@@ -26,13 +29,19 @@ defineOptions({
 	inheritAttrs: false,
 });
 
-const taskStates = ['Todo', 'Doing', 'Done'];
+const board = getCurrentBoard();
+
+const taskStates = computed(() => board.value.columns.map(col => col.name));
 const changeTaskStatus = newStatus => {
 	const dropdown = event.target.closest('.dropdown');
-	if (!dropdown) return;
+	if (!dropdown || newStatus === props.data.status) return;
 	const checkbox = dropdown.previousElementSibling.previousElementSibling;
 	checkbox.checked = !checkbox.checked;
 	props.data.status = newStatus;
+	board.value.columns.forEach(col => {
+		col.tasks = col.tasks.filter(task => task !== props.data);
+		if (col.name === props.data.status) col.tasks.push(props.data);
+	});
 };
 </script>
 

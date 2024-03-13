@@ -31,7 +31,10 @@
 				</li>
 			</TransitionGroup>
 		</section>
-		<section class="board__column-add" v-if="columns?.length">
+		<section
+			class="board__column-add"
+			v-if="columns?.length"
+			@click="toggleModal('board-edit')">
 			<button class="board__column-add_btn">
 				<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
 					<path
@@ -45,8 +48,15 @@
 			<h4 class="board__empty-heading heading-l">
 				This board is empty. Create a new column to get started.
 			</h4>
-			<button type="button" class="board__empty-btn button-primary-l">
-				<img src="../assets/icon-add-task-mobile.svg" alt="add" />
+			<button
+				type="button"
+				class="board__empty-btn button-primary-l"
+				@click="toggleModal('board-edit')">
+				<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
+					<path
+						fill="#FFF"
+						d="M7.368 12V7.344H12V4.632H7.368V0H4.656v4.632H0v2.712h4.656V12z" />
+				</svg>
 				add new column
 			</button>
 		</div>
@@ -97,6 +107,8 @@ const toggleView = curTask => {
 .board__column-add {
 	display: grid;
 	place-items: center;
+	border-radius: 1rem;
+	background-color: rgb(222, 227, 237);
 }
 .board__column-add_btn {
 	padding: 2rem;
@@ -105,6 +117,16 @@ const toggleView = curTask => {
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
+	transition: color 0.3s;
+}
+.board__column-add_btn:hover svg path {
+	transition: fill 0.3s;
+}
+.board__column-add_btn:hover {
+	color: var(--main-purple);
+}
+.board__column-add_btn:hover svg path {
+	fill: var(--main-purple);
 }
 .board__column-color {
 	display: none;
@@ -134,6 +156,10 @@ const toggleView = curTask => {
 	display: flex;
 	flex-direction: column;
 	gap: 0.8rem;
+	transition: box-shadow 0.5s;
+}
+.board__task:hover {
+	box-shadow: 0px 10px 40px 4px var(--main-purple-hover);
 }
 .board__task-completed {
 	color: var(--medium-grey);
@@ -160,5 +186,8 @@ body.dark .board {
 }
 body.dark .board__task {
 	background-color: var(--dark-grey);
+}
+body.dark .board__column-add {
+	background-color: rgba(93, 97, 139, 0.121);
 }
 </style>

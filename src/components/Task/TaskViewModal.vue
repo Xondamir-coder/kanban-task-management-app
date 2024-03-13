@@ -16,7 +16,7 @@
 			<p v-if="task.description" class="modal__task-view_desc body-l">
 				{{ task.description }}
 			</p>
-			<div class="modal__task-view_subtasks">
+			<div class="modal__task-view_subtasks" v-if="task.subtasks.length">
 				<h2 class="modal__task-view_num body-m">
 					Subtasks ({{ numOfCompletedSubtasks }} of {{ task.subtasks.length }})
 				</h2>
@@ -80,6 +80,10 @@ const changeSubtaskStatus = curSubtask => (curSubtask.isCompleted = !curSubtask.
 	background-color: var(--light-grey);
 	padding: 1rem;
 	border-radius: 0.5rem;
+	transition: background-color 0.5s;
+}
+.modal__task-view_item:hover {
+	background-color: #828fa33f;
 }
 .modal__task-view_head {
 	display: flex;
@@ -107,5 +111,8 @@ body.dark .modal__task-view_num {
 }
 body.dark .modal__task-view_item {
 	background-color: var(--very-dark-grey);
+}
+body.dark .modal__task-view_item:hover {
+	background-color: var(--main-purple-hover);
 }
 </style>

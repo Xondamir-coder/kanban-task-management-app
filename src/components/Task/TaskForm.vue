@@ -39,7 +39,6 @@
 					add new subtask
 				</button>
 			</div>
-			<TaskStatus :data="data" style="bottom: 12.2rem" />
 			<button type="submit" class="modal__task-form_btn button-primary-s">
 				Save Changes
 			</button>

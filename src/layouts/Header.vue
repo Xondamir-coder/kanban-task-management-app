@@ -16,7 +16,10 @@
 			</MyTransition>
 		</div>
 		<div class="header__cta">
-			<button class="header__cta-add button-primary-l" @click="toggleModal('task-add')">
+			<button
+				:disabled="!board?.columns.length"
+				class="header__cta-add button-primary-l"
+				@click="toggleModal('task-add')">
 				<img src="../assets/icon-add-task-mobile.svg" alt="" />
 				<span>add new task</span>
 			</button>
@@ -81,6 +84,9 @@ const heading = computed(() =>
 	display: flex;
 	align-items: center;
 	gap: 0.8rem;
+}
+.header__cta-add:disabled {
+	opacity: 0.3;
 }
 .header__logo-label {
 	pointer-events: none;
