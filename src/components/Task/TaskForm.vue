@@ -66,6 +66,8 @@ const form = ref(null);
 const populateColumns = () => {
 	const formData = new FormData(form.value);
 	const cols = Array.from(formData).filter(([key]) => key.includes('col'));
+	data.value.title = formData.get('task-title');
+	data.value.description = formData.get('task-desc');
 	data.value.subtasks = cols.map(([_, val], i) => ({
 		title: val,
 		isCompleted: data.value.subtasks[i].isCompleted,
