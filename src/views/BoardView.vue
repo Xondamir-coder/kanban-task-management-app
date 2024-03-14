@@ -1,6 +1,14 @@
+'
 <template>
 	<main class="board" :class="!columns?.length ? 'board--empty' : 'board--full'">
-		<section class="board__column" v-for="col in columns" :key="col">
+		<section
+			class="board__column"
+			v-for="col in columns"
+			:key="col"
+			:data-col="col.name"
+			@drop="dropTask"
+			@dragover.prevent
+			@dragenter.prevent>
 			<h2 class="board__column-heading heading-s">
 				<input
 					class="board__column-color"
@@ -20,7 +28,9 @@
 					class="board__task"
 					v-for="task in col.tasks"
 					:key="task"
-					@click="toggleView(task)">
+					@click="toggleView(task)"
+					@dragstart="dragTask(task)"
+					draggable="true">
 					<h3 class="heading-m">{{ task.title }}</h3>
 					<p class="board__task-completed body-m">
 						{{ task.subtasks.filter(task => task.isCompleted).length }}
@@ -64,12 +74,13 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { getRandomColor } from '../js/helpers';
 import { getCurrentBoard, task, toggleModal } from '../js/state';
 
 const board = getCurrentBoard();
 const columns = computed(() => board.value?.columns);
+const draggedTask = ref();
 
 const changeOvalColor = event => {
 	const oval = event.target.nextElementSibling.firstElementChild;
@@ -80,6 +91,22 @@ const toggleView = curTask => {
 	task.value = curTask;
 	toggleModal('task-view');
 };
+const dropTask = event => {
+	console.log(event);
+	const { target } = event;
+	const parent = target.closest('.board__column');
+	if (!parent) return;
+	const colName = parent.dataset.col;
+
+	// remove from current column
+	board.value.columns.forEach(
+		col => (col.tasks = col.tasks.filter(colTask => colTask !== draggedTask.value))
+	);
+
+	// add to new column
+	board.value.columns.find(col => col.name === colName).tasks.push(draggedTask.value);
+};
+const dragTask = task => (draggedTask.value = task);
 </script>
 
 <style scoped>
@@ -156,13 +183,18 @@ const toggleView = curTask => {
 	display: flex;
 	flex-direction: column;
 	gap: 0.8rem;
-	transition: box-shadow 0.5s;
+	transition: box-shadow 0.5s, color 0.5s;
 }
 .board__task:hover {
 	box-shadow: 0px 10px 40px 4px var(--main-purple-hover);
+	color: var(--main-purple);
+}
+.board__task:hover .board__task-completed {
+	color: var(--main-purple);
 }
 .board__task-completed {
 	color: var(--medium-grey);
+	transition: color 0.5s;
 }
 .board__empty {
 	display: flex;
@@ -191,3 +223,4 @@ body.dark .board__column-add {
 	background-color: rgba(93, 97, 139, 0.121);
 }
 </style>
+'

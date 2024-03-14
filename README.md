@@ -66,7 +66,7 @@ Learned a lot about forms and validation
 
 ### Continued development
 
-In future I want to improve this project by adding drag-and-drop feauture. With this it will truly be complete.
+In future I want to improve this project by adding more transition and animations. Also clean and resctucture the code a bit
 
 ### Useful resources
 

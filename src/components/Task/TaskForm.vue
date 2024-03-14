@@ -52,7 +52,6 @@ import { getCurrentBoard, showModal, task, toggleModal } from '../../js/state';
 import { getEmptyTask, getEmptyTaskCol } from '../../js/helpers';
 import Modal from '../Modal.vue';
 import FormColumns from '../FormColumns.vue';
-import TaskStatus from './TaskStatus.vue';
 
 const board = getCurrentBoard();
 const props = defineProps({
@@ -67,7 +66,6 @@ const form = ref(null);
 const populateColumns = () => {
 	const formData = new FormData(form.value);
 	const cols = Array.from(formData).filter(([key]) => key.includes('col'));
-	console.log(data.value.subtasks);
 	data.value.subtasks = cols.map(([_, val], i) => ({
 		title: val,
 		isCompleted: data.value.subtasks[i].isCompleted,
