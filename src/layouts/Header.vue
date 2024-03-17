@@ -23,7 +23,11 @@
 				<img src="../assets/icon-add-task-mobile.svg" alt="" />
 				<span>add new task</span>
 			</button>
-			<input class="menu-checkbox" type="checkbox" id="menu__checkbox" />
+			<input
+				class="menu-checkbox"
+				type="checkbox"
+				id="menu__checkbox"
+				:disabled="!board?.columns.length" />
 			<div class="header__cta-menu menu">
 				<button class="body-l" @click="toggleModal('board-edit')">
 					<label for="menu__checkbox">Edit Board</label>
@@ -87,6 +91,7 @@ const heading = computed(() =>
 }
 .header__cta-add:disabled {
 	opacity: 0.3;
+	cursor: not-allowed;
 }
 .header__logo-label {
 	pointer-events: none;

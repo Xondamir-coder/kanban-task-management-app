@@ -1,10 +1,6 @@
 <template>
-	<MyTransition>
-		<form
-			class="modal modal__board"
-			v-if="showModal === 'board-edit'"
-			@submit.prevent="submitForm"
-			ref="form">
+	<Modal type="board" action="edit">
+		<form class="modal__board" @submit.prevent="submitForm" ref="form">
 			<h1 class="heading-l">Edit Board</h1>
 			<div class="modal__board-name">
 				<label class="modal__board-label body-m" for="board__name">board name</label>
@@ -36,14 +32,14 @@
 				save changes
 			</button>
 		</form>
-	</MyTransition>
+	</Modal>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue';
 import { getCurrentBoard, showModal, toggleModal } from '../../js/state';
-import MyTransition from '../MyTransition.vue';
 import FormColumns from '../FormColumns.vue';
+import Modal from '../Modal.vue';
 import { getEmptyBoardCol } from '../../js/helpers';
 
 const board = getCurrentBoard();

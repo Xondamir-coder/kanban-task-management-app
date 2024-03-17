@@ -1,14 +1,13 @@
 <template>
-	<MyTransition>
-		<div class="modal modal__error" v-if="showModal === 'board-error'">
+	<Modal type="board" action="error">
+		<div class="modal__error">
 			<h1 class="heading-xl">Please select a board.</h1>
 		</div>
-	</MyTransition>
+	</Modal>
 </template>
 
 <script setup>
-import { showModal } from '../../js/state';
-import MyTransition from '../MyTransition.vue';
+import Modal from '../Modal.vue';
 </script>
 
 <style scoped>
@@ -18,4 +17,3 @@ import MyTransition from '../MyTransition.vue';
 	max-width: 40rem;
 }
 </style>
-../../js/state

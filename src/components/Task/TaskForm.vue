@@ -39,6 +39,10 @@
 					add new subtask
 				</button>
 			</div>
+			<div class="modal__task-form_date">
+				<label class="modal__task-form_label body-m" for="date">Date</label>
+				<input type="date" name="task-date" id="date" />
+			</div>
 			<button type="submit" class="modal__task-form_btn button-primary-s">
 				Save Changes
 			</button>

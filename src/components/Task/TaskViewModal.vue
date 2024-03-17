@@ -1,55 +1,50 @@
 <template>
-	<MyTransition>
-		<div v-if="showModal === 'task-view'" class="modal modal__task-view">
-			<div class="modal__task-view_head">
-				<h1 class="heading-l">{{ task.title }}</h1>
-				<input class="menu-checkbox" type="checkbox" id="task__menu" />
-				<div class="menu modal__task-view_menu">
-					<button class="body-l" @click="toggleModal('task-edit')">
-						<label for="task__menu">Edit Task</label>
-					</button>
-					<button class="body-l" @click="toggleModal('task-delete')">
-						<label for="task__menu">Delete Task</label>
-					</button>
-				</div>
+	<Modal type="task" action="view" class="modal__task-view">
+		<div class="modal__task-view_head">
+			<h1 class="heading-l">{{ task.title }}</h1>
+			<input class="menu-checkbox" type="checkbox" id="task__menu" />
+			<div class="menu modal__task-view_menu">
+				<button class="body-l" @click="toggleModal('task-edit')">
+					<label for="task__menu">Edit Task</label>
+				</button>
+				<button class="body-l" @click="toggleModal('task-delete')">
+					<label for="task__menu">Delete Task</label>
+				</button>
 			</div>
-			<p v-if="task.description" class="modal__task-view_desc body-l">
-				{{ task.description }}
-			</p>
-			<div class="modal__task-view_subtasks" v-if="task.subtasks.length">
-				<h2 class="modal__task-view_num body-m">
-					Subtasks ({{ numOfCompletedSubtasks }} of {{ task.subtasks.length }})
-				</h2>
-				<ul class="modal__task-view_list" role="list">
-					<li
-						class="modal__task-view_item"
-						v-for="(subtask, i) in task.subtasks"
-						:key="i">
-						<label class="checkbox-container" :for="`${subtask.title}-${i}`">
-							<input
-								class="checkbox"
-								type="checkbox"
-								name="checkbox"
-								:id="`${subtask.title}-${i}`"
-								:checked="subtask.isCompleted"
-								@change="changeSubtaskStatus(subtask)" />
-							<label :for="`${subtask.title}-${i}`" class="checkbox-label">{{
-								subtask.title
-							}}</label>
-						</label>
-					</li>
-				</ul>
-			</div>
-			<TaskStatus :data="task" />
 		</div>
-	</MyTransition>
+		<p v-if="task.description" class="modal__task-view_desc body-l">
+			{{ task.description }}
+		</p>
+		<div class="modal__task-view_subtasks" v-if="task.subtasks.length">
+			<h2 class="modal__task-view_num body-m">
+				Subtasks ({{ numOfCompletedSubtasks }} of {{ task.subtasks.length }})
+			</h2>
+			<ul class="modal__task-view_list" role="list">
+				<li class="modal__task-view_item" v-for="(subtask, i) in task.subtasks" :key="i">
+					<label class="checkbox-container" :for="`${subtask.title}-${i}`">
+						<input
+							class="checkbox"
+							type="checkbox"
+							name="checkbox"
+							:id="`${subtask.title}-${i}`"
+							:checked="subtask.isCompleted"
+							@change="changeSubtaskStatus(subtask)" />
+						<label :for="`${subtask.title}-${i}`" class="checkbox-label">{{
+							subtask.title
+						}}</label>
+					</label>
+				</li>
+			</ul>
+		</div>
+		<TaskStatus :data="task" />
+	</Modal>
 </template>
 
 <script setup>
 import { computed } from 'vue';
-import { showModal, task, toggleModal } from '../../js/state';
-import MyTransition from '../MyTransition.vue';
+import { task, toggleModal } from '../../js/state';
 import TaskStatus from './TaskStatus.vue';
+import Modal from '../Modal.vue';
 
 const numOfCompletedSubtasks = computed(
 	() => task.value.subtasks.filter(subtask => subtask.isCompleted).length

@@ -308,6 +308,10 @@ body.dark .dropdown {
 .menu button:last-child {
 	color: var(--red);
 }
+.menu-checkbox:disabled::before {
+	opacity: 0.3;
+	cursor: not-allowed;
+}
 .menu-checkbox::before {
 	content: url(../assets/icon-vertical-ellipsis.svg);
 	cursor: pointer;
