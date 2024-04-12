@@ -11,7 +11,8 @@
 							"title": "Build UI for onboarding flow",
 							"description": "",
 							"status": "Todo",
-							"date": "2024-04-17T11:00:00.000Z",
+							"startDate": "2024-04-05T12:33:00.000Z",
+							"endDate": "2024-04-19T12:33:00.000Z",
 							"subtasks": [
 								{
 									"title": "Sign up page",
@@ -31,7 +32,8 @@
 							"title": "Build UI for search",
 							"description": "",
 							"status": "Todo",
-							"date": "2024-04-03T11:54:00.000Z",
+							"startDate": "2024-04-05T12:33:00.000Z",
+							"endDate": "2024-04-10T12:33:00.000Z",
 							"subtasks": [
 								{
 									"title": "Search page",
@@ -43,7 +45,8 @@
 							"title": "Build settings UI",
 							"description": "",
 							"status": "Todo",
-							"date": "2024-04-13T11:57:00.000Z",
+							"startDate": "2024-04-05T12:33:00.000Z",
+							"endDate": "2024-04-12T12:33:00.000Z",
 							"subtasks": [
 								{
 									"title": "Account page",
@@ -59,7 +62,7 @@
 							"title": "QA and test all major user journeys",
 							"description": "Once we feel version one is ready, we need to rigorously test it both internally and externally to identify any major gaps.",
 							"status": "Todo",
-							"date": "2024-04-18T11:57:00.000Z",
+							"endDate": "2024-04-20T12:33:00.000Z",
 							"subtasks": [
 								{
 									"title": "Internal testing",

@@ -16,7 +16,7 @@ export const getEmptyTask = () => ({
 	title: '',
 	description: '',
 	status: '',
-	subtasks: [{ title: '', isCompleted: false }],
+	subtasks: [{ title: '', isCompleted: false }]
 });
 export const getEmptyTaskCol = () => ({ title: '', isCompleted: false });
 export const watchBoards = boards => localStorage.setItem('boards', JSON.stringify(boards));

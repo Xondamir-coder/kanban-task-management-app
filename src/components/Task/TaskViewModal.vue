@@ -36,10 +36,11 @@
 				</li>
 			</ul>
 		</div>
-		<div class="modal__task-view_date" v-if="task.date">
+		<div class="modal__task-view_date" v-if="task.startDate || task.endDate">
 			<h2 class="modal__task-view_num body-m">Date</h2>
-			<p>
-				{{ date.toLocaleString() }} -
+			<p v-if="task.startDate">Start - {{ startDate.toLocaleString() }}</p>
+			<p v-if="task.endDate">End - {{ endDate.toLocaleString() }}</p>
+			<p v-if="task.endDate">
 				<span :style="dateStyle">{{ deadline }}</span>
 			</p>
 		</div>
@@ -56,8 +57,9 @@ import Modal from '../Modal.vue';
 const numOfCompletedSubtasks = computed(
 	() => task.value.subtasks.filter(subtask => subtask.isCompleted).length
 );
-const date = computed(() => new Date(task.value.date));
-const daysLeft = computed(() => date.value.getDate() - new Date().getDate());
+const endDate = computed(() => new Date(task.value.endDate));
+const startDate = computed(() => new Date(task.value.startDate));
+const daysLeft = computed(() => endDate.value.getDate() - new Date().getDate());
 const deadline = computed(() => {
 	const text =
 		daysLeft.value === 0

@@ -41,7 +41,14 @@
 			</div>
 			<div class="modal__task-form_date">
 				<label class="modal__task-form_label body-m" for="date">Date</label>
-				<VueDatePicker v-model="date" class="date-picker"></VueDatePicker>
+				<div class="modal__task-form_date-container">
+					<span class="modal__task-form_date-label">Start</span>
+					<VueDatePicker v-model="startDate" class="date-picker"></VueDatePicker>
+				</div>
+				<div class="modal__task-form_date-container">
+					<span class="modal__task-form_date-label">End</span>
+					<VueDatePicker v-model="endDate" class="date-picker"></VueDatePicker>
+				</div>
 			</div>
 			<button type="submit" class="modal__task-form_btn button-primary-s">
 				Save Changes
@@ -67,7 +74,8 @@ const props = defineProps({
 
 const heading = computed(() => (props.action === 'add' ? 'add new task' : 'edit task'));
 const data = ref();
-const date = ref();
+const startDate = ref();
+const endDate = ref();
 const form = ref(null);
 
 const populateColumns = () => {
@@ -93,14 +101,16 @@ const watchTask = () => {
 		props.action === 'edit'
 			? task.value && JSON.parse(JSON.stringify(task.value))
 			: getEmptyTask();
-	date.value = data.value.date || '';
+	startDate.value = data.value.startDate || '';
+	endDate.value = data.value.endDate || '';
 };
 const submitForm = () => {
 	const boardData = { colIndex: -1, taskIndex: -1 };
 	const formData = new FormData(form.value);
 	data.value.title = formData.get('task-title');
 	data.value.description = formData.get('task-desc');
-	data.value.date = date.value.toISOString();
+	data.value.startDate = startDate.value;
+	data.value.endDate = endDate.value;
 
 	populateColumns();
 
@@ -146,6 +156,15 @@ form.modal__task-form {
 }
 .modal__task-form_btn {
 	align-items: center;
+}
+.modal__task-form_date-container {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: 6rem 1fr;
+	align-items: center;
+}
+.modal__task-form_date-label {
+	font-size: 1.4rem;
 }
 
 .date-picker {
