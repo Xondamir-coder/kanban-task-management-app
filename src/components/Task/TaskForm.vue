@@ -41,7 +41,7 @@
 			</div>
 			<div class="modal__task-form_date">
 				<label class="modal__task-form_label body-m" for="date">Date</label>
-				<input type="date" name="task-date" id="date" />
+				<VueDatePicker v-model="date" class="date-picker"></VueDatePicker>
 			</div>
 			<button type="submit" class="modal__task-form_btn button-primary-s">
 				Save Changes
@@ -56,15 +56,18 @@ import { getCurrentBoard, showModal, task, toggleModal } from '../../js/state';
 import { getEmptyTask, getEmptyTaskCol } from '../../js/helpers';
 import Modal from '../Modal.vue';
 import FormColumns from '../FormColumns.vue';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 
 const board = getCurrentBoard();
 const props = defineProps({
 	type: String,
-	action: String,
+	action: String
 });
 
 const heading = computed(() => (props.action === 'add' ? 'add new task' : 'edit task'));
 const data = ref();
+const date = ref();
 const form = ref(null);
 
 const populateColumns = () => {
@@ -74,7 +77,7 @@ const populateColumns = () => {
 	data.value.description = formData.get('task-desc');
 	data.value.subtasks = cols.map(([_, val], i) => ({
 		title: val,
-		isCompleted: data.value.subtasks[i].isCompleted,
+		isCompleted: data.value.subtasks[i].isCompleted
 	}));
 };
 const removeSubtask = title =>
@@ -90,12 +93,14 @@ const watchTask = () => {
 		props.action === 'edit'
 			? task.value && JSON.parse(JSON.stringify(task.value))
 			: getEmptyTask();
+	date.value = data.value.date || '';
 };
 const submitForm = () => {
 	const boardData = { colIndex: -1, taskIndex: -1 };
 	const formData = new FormData(form.value);
 	data.value.title = formData.get('task-title');
 	data.value.description = formData.get('task-desc');
+	data.value.date = date.value.toISOString();
 
 	populateColumns();
 
@@ -141,5 +146,12 @@ form.modal__task-form {
 }
 .modal__task-form_btn {
 	align-items: center;
+}
+
+.date-picker {
+	--dp-font-size: 1.6rem;
+	--dp-preview-font-size: 1.28rem;
+	--dp-calendar-header-cell-padding: 0.8rem;
+	--dp-time-font-size: 3.2rem;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<main class="home">
-		<h1 class="heading-xl">You're at home. Select a board.</h1>
+		<h1 class="heading-xl">Please select a board.</h1>
 	</main>
 </template>
 

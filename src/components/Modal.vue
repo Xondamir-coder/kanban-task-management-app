@@ -11,7 +11,7 @@ import { showModal } from '../js/state';
 import MyTransition from './MyTransition.vue';
 const props = defineProps({
 	type: String,
-	action: String,
+	action: String
 });
 </script>
 

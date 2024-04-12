@@ -36,6 +36,13 @@
 				</li>
 			</ul>
 		</div>
+		<div class="modal__task-view_date" v-if="task.date">
+			<h2 class="modal__task-view_num body-m">Date</h2>
+			<p>
+				{{ date.toLocaleString() }} -
+				<span :style="dateStyle">{{ deadline }}</span>
+			</p>
+		</div>
 		<TaskStatus :data="task" />
 	</Modal>
 </template>
@@ -49,6 +56,20 @@ import Modal from '../Modal.vue';
 const numOfCompletedSubtasks = computed(
 	() => task.value.subtasks.filter(subtask => subtask.isCompleted).length
 );
+const date = computed(() => new Date(task.value.date));
+const daysLeft = computed(() => date.value.getDate() - new Date().getDate());
+const deadline = computed(() => {
+	const text =
+		daysLeft.value === 0
+			? 'The deadline has arrived'
+			: daysLeft.value < 0
+			? 'The deadline has passed'
+			: `${daysLeft.value} days left till the deadline`;
+	return text;
+});
+const dateStyle = computed(() => ({
+	color: daysLeft.value < 0 ? 'var(--red)' : 'var(--main-purple)'
+}));
 
 const changeSubtaskStatus = curSubtask => (curSubtask.isCompleted = !curSubtask.isCompleted);
 </script>
@@ -96,6 +117,13 @@ const changeSubtaskStatus = curSubtask => (curSubtask.isCompleted = !curSubtask.
 .modal__task-view_menu {
 	top: 7rem;
 	right: 3rem;
+}
+.modal__task-view_date {
+	display: grid;
+	row-gap: 0.5rem;
+}
+.modal__task-view_date p {
+	font-size: 1.3rem;
 }
 
 body.dark .modal__task-view_menu {
