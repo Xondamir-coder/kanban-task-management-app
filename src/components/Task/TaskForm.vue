@@ -1,5 +1,5 @@
 <template>
-	<Modal :type="type" :action="action">
+	<Modal type="task" :action="action">
 		<form class="modal__task-form" @submit.prevent="submitForm" ref="form">
 			<h1 class="heading-l capitalize">{{ heading }}</h1>
 			<div class="modal__task-form_title">
@@ -68,7 +68,6 @@ import '@vuepic/vue-datepicker/dist/main.css';
 
 const board = getCurrentBoard();
 const props = defineProps({
-	type: String,
 	action: String
 });
 
@@ -101,8 +100,8 @@ const watchTask = () => {
 		props.action === 'edit'
 			? task.value && JSON.parse(JSON.stringify(task.value))
 			: getEmptyTask();
-	startDate.value = data.value.startDate || '';
-	endDate.value = data.value.endDate || '';
+	startDate.value = data.value?.startDate || '';
+	endDate.value = data.value?.endDate || '';
 };
 const submitForm = () => {
 	const boardData = { colIndex: -1, taskIndex: -1 };
@@ -141,6 +140,10 @@ watch(showModal, watchTask);
 <style scoped>
 form.modal__task-form {
 	gap: 2rem;
+	max-height: 80vh;
+	overflow-y: auto;
+	scrollbar-width: thin;
+	padding-right: 2rem;
 }
 .modal__task-form,
 .modal__task-form > * {

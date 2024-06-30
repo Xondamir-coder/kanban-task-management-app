@@ -12,8 +12,8 @@
 
 	<!-- Task Modals -->
 	<TaskViewModal />
-	<TaskForm type="task" action="edit" />
-	<TaskForm type="task" action="add" />
+	<TaskForm action="edit" />
+	<TaskForm action="add" />
 	<TaskDeleteModal />
 
 	<!-- Overlay -->

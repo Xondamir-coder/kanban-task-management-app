@@ -1,5 +1,4 @@
 import { reactive, ref } from 'vue';
-import data from '../data.json';
 
 const app = document.querySelector('#app');
 
@@ -8,7 +7,7 @@ export const getTheme = () => {
 	theme === 'dark' && document.body.classList.add('dark');
 	return ref(theme);
 };
-export const getBoards = () => reactive(JSON.parse(localStorage.getItem('boards')) || data.boards);
+export const getBoards = () => reactive(JSON.parse(localStorage.getItem('boards')) || []);
 export const toggleAppClosedClass = () => app.classList.toggle('app--closed');
 export const getEmptyBoard = () => ({ id: 0, name: '', columns: [] });
 export const getEmptyBoardCol = () => ({ name: '', tasks: [] });
